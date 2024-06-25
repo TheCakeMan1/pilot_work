@@ -11,13 +11,14 @@ void gps(GPS &gps_data) {
         serial.set_option(boost::asio::serial_port_base::stop_bits(boost::asio::serial_port_base::stop_bits::one));
         serial.set_option(boost::asio::serial_port_base::flow_control(boost::asio::serial_port_base::flow_control::none));
 
-        std::string buf[256];
+        char buf[256];
 
         while (true) {
             try{
                 boost::system::error_code error;
                 size_t len = serial.read_some(boost::asio::buffer(buf), error);
-                parser(line, gps_data);
+                std::string received_data(buf, len);
+                parser(received_data, gps_data);
             } catch(...){
                 continue;
             }

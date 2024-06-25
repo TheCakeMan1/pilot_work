@@ -11,13 +11,6 @@ sqlite3 libsqlite3-dev
 #include <sqlite3.h>
 #include "uart_connect.h"
 
-struct GPS{
-    std::stringshir;
-    std::stringnap_shir;
-    std::stringdolg;
-    std::stringnap_dolg;
-    int speed;
-}
 
 GPS gps_data;
 using json = nlohmann::json;
@@ -52,9 +45,8 @@ void response(httplib::Server &svr){
 
     });
     svr.Get("/gps_data", [](const httplib::Request& req, httplib::Response& res){
-        std::string temp = gps_data.shir + '"' + gps_data.nap_shir + '\n' + gps_data.dolg + '"' + gps_data.nap_dolg '\n' + gps_data.speed;
+        std::string temp = gps_data.shir + '"' + gps_data.nap_shir + '\n' + gps_data.dolg + '"' + gps_data.nap_dolg + '\n' + std::to_string(gps_data.speed);
         res.set_content(temp, "text/plain");
-        delete(temp);
     });
 }
 
@@ -82,7 +74,7 @@ int main() {
     httplib::Server svr;
     response(svr);
     //поток на uart
-    std::thread t(threadFunction, std::ref(gps_data));
+    std::thread t(gps, std::ref(gps_data));
 
     std::cout << "Run server in " << config.ip << ":" << config.port << std::endl;
     svr.listen(config.ip, config.port);

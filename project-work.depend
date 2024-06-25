@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1719340095 source:/root/Documents/project-work/gps.cpp
+	"gps.h"
+
+1719340126 /root/Documents/project-work/gps.h
+	<iostream>
+	<vector>
+	<fstream>
+	<sstream>
+	<string>
+
+1719339301 source:/root/Documents/project-work/main.cpp
+	"httplib.h"
+	<nlohmann/json.hpp>
+	<sqlite3.h>
+	"uart_connect.h"
+
+1719340115 /root/Documents/project-work/uart_connect.h
+	<iostream>
+	<boost/asio.hpp>
+	<vector>
+	"gps.h"
+
+1719340320 source:/root/Documents/project-work/uart_connect.cpp
+	"uart_connect.h"
+

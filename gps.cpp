@@ -1,9 +1,21 @@
 #include "gps.h"
 
+std::vector<std::string> splitString(const std::string& str, char delimiter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(str);
+
+    while (std::getline(tokenStream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+
+    return tokens;
+}
+
 void parser(std::string line, GPS &gps_data) {
     std::vector<std::string> tokens = splitString(line, ',');
     if (tokens.size() == 0) {
-        continue;
+        return;
     }
     else {
         if(tokens[0] == "$GNGGA"){
@@ -12,7 +24,7 @@ void parser(std::string line, GPS &gps_data) {
             gps_data.dolg = tokens[4];
             gps_data.nap_dolg = tokens[5];
         } else if (tokens[0] == "$GNRMC"){
-            gps_data.speed = tokens[7];
+            gps_data.speed = std::stof(tokens[7]);
         }
     }
 }
